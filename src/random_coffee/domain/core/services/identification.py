@@ -10,7 +10,7 @@ from random_coffee.infrastructure.security.confirmation_code import (
     verify_confirmation_code,
 )
 from random_coffee.domain.core.exceptions.identification import (
-    EmailNotBelongsToAnyOrganisation,
+    UnknownEmailDomainError,
     IdentificationConfirmationNotVerified,
 )
 from random_coffee.domain.core.services.access import AccessService
@@ -49,17 +49,19 @@ class IdentificationService(BaseService):
     async def create_identification_session(
             self,
             account: Account,
+            person: Person,
+            confirmation_code: int,
     ) -> IdentificationSession:
         email_domain = account.email.split("@")[1]
         organisation = await self.all_organisations.get_by_email_domain(
             email_domain,
         )
         if organisation is None:
-            raise EmailNotBelongsToAnyOrganisation()
-        confirmation_code = generate_confirmation_code()
+            raise UnknownEmailDomainError()
         confirmation_code_hash = get_confirmation_code_hash(confirmation_code)
         identification_session = await self.all_identification_sessions.create(
             account_id=account.id,
+            person_id=person.id,
             organisation_id=organisation.id,
             confirmation_code_hash=confirmation_code_hash,
         )

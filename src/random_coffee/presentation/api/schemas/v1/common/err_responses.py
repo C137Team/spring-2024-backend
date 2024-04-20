@@ -27,6 +27,10 @@ class Exceptions:
         __status_code__ = status.HTTP_404_NOT_FOUND
         __detail__ = "referenced entity not found"
 
+    class UnknownEmailDomainError(HTTPExceptionWrapper):
+        __status_code__ = status.HTTP_400_BAD_REQUEST
+        __detail__ = "unknown email domain"
+
 
 class Schemas:
     class LoginAlreadyOccupiedError(BaseModel):
@@ -43,3 +47,6 @@ class Schemas:
 
     class EmptyReferenceError(BaseModel):
         detail: Literal['referenced entity not found']
+
+    class UnknownEmailDomainError(BaseModel):
+        detail: Literal["unknown email domain"]

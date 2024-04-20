@@ -32,6 +32,8 @@ class Environment(BaseSettings):
     admin_password: Optional[str] = "admin"
     automatically_upsert_ddl: bool = False
     sqlalchemy_echo: bool = False
+    email_address: str
+    email_password: str
 
 
 def load_env(filename: str) -> Environment:

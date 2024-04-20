@@ -43,5 +43,5 @@ migrations = [
 
 
 [project.scripts]
-backend-api = "random_coffee.main.api:main"
-backend-telegram = "random_coffee.main.telegram:main"
+random-coffee-api = "random_coffee.main.api:main"
+random-coffee-telegram = "random_coffee.main.telegram:main"

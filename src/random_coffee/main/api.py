@@ -24,7 +24,7 @@ admin_app = Admin(
     engine=engine,
     authentication_backend=authentication_backend,
 )
-# include_admin_views(admin_app)
+include_admin_views(admin_app)
 
 
 origins = [
@@ -61,7 +61,7 @@ def main():
     if environment.application_protocol == 'HTTP':
         uvicorn.run(
             app=f'{__name__}:app',
-            host="0.0.0.0",
+            host="172.20.10.2",
             port=8000,
             reload=environment.application_autoreload,
             reload_dirs=['src'],

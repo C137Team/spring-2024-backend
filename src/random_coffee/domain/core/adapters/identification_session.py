@@ -12,11 +12,13 @@ class AllIdentificationSessions(BaseEntityRepo[IdentificationSession]):
     async def create(
             self,
             account_id: int,
+            person_id: int,
             organisation_id: int,
             confirmation_code_hash: str,
     ) -> IdentificationSession:
         obj = IdentificationSession(
             account_id=account_id,
+            person_id=person_id,
             organisation_id=organisation_id,
             confirmation_code_hash=confirmation_code_hash,
         )

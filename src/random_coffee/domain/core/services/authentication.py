@@ -1,4 +1,11 @@
 from random_coffee.domain.core.adapters.account import AllAccounts
+from random_coffee.domain.core.services import IdentificationService
+from random_coffee.domain.core.services.notification import NotificationService
+from random_coffee.infrastructure.notifier import NotifierBackendEnum
+from random_coffee.infrastructure.notifier.backends.email.tasks import \
+    EmailNotificationContentDTO
+from random_coffee.infrastructure.security.confirmation_code import \
+    generate_confirmation_code
 from random_coffee.infrastructure.security.password import verify_password, get_password_hash
 
 from random_coffee.domain.core.models import Account, Person
@@ -14,7 +21,11 @@ class AuthenticationService(BaseService):
     def __init__(
             self,
             all_accounts: AllAccounts,
+            notification_service: NotificationService,
+            identification_service: IdentificationService,
     ):
+        self.notification_service = notification_service
+        self.identification_service = identification_service
         self.all_accounts = all_accounts
 
     async def register_account(
@@ -41,7 +52,18 @@ class AuthenticationService(BaseService):
         account = await self.all_accounts.create(
             email=email,
             password_hash=password_hash,
-            person=person,
+            person=None,
+        )
+        confirmation_code = generate_confirmation_code()
+        await self.identification_service.create_identification_session(
+            account, person, confirmation_code,
+        )
+        await self.notification_service.notifier.send_notification(
+            backend_enum_member=NotifierBackendEnum.EMAIL,
+            internal_destination_identifier=account.email,
+            notification_content=EmailNotificationContentDTO(
+                text=f"Код подтверждения: {confirmation_code}",
+            )
         )
 
         return account
@@ -58,7 +80,7 @@ class AuthenticationService(BaseService):
         :raise AuthenticationError:
         :return:
         """
-        account = await self.all_accounts.get_by_login(login)
+        account = await self.all_accounts.with_login(login)
 
         if account is None:
             raise AuthenticationError()

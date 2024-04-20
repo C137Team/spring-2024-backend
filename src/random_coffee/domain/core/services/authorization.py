@@ -42,19 +42,11 @@ class AuthorizationService(BaseService):
         if account is None:
             raise AuthorizationError()
 
-        person = account.person
-
-        if account.person is None:
-            raise AuthorizationError()
-
-        return await self.authorize_person(
-            person=person,
-            access_scopes=access_scopes,
-        )
+        return None
 
     async def authorize_person(
             self,
-            person: Person,
+            person: Person | None,
             access_scopes: AbstractSet[AccessScopeEnum],
     ) -> None:
         """Authorize person method
@@ -66,6 +58,9 @@ class AuthorizationService(BaseService):
         :raise AuthorizationError:
         :return:
         """
+
+        if person is None:
+            raise AuthorizationError()
 
         try:
             # await self.access_service.ensure_access(

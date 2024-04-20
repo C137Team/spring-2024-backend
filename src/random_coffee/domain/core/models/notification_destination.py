@@ -29,4 +29,4 @@ class NotificationDestination(BaseRelationalEntity):
     created_at: Mapped[datetime] = mapped_column(default=datetime.now)
     deleted_at: Mapped[Optional[datetime]] = mapped_column()
 
-    person: Mapped[list[Person]] = relationship(secondary=NotificationDestinationRelPerson.__table__)
+    persons: Mapped[list[Person]] = relationship(secondary=NotificationDestinationRelPerson.__table__)

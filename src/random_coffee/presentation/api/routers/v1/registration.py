@@ -1,3 +1,5 @@
+from typing import Union
+
 from fastapi import APIRouter
 
 from random_coffee import application
@@ -13,7 +15,10 @@ router = APIRouter(tags=['Auth'])
     '/register',
     response_model=application.register.RegisterResponseDTO,
     responses={
-        400: {"model": schemas.v1.common.err_responses.Schemas.LoginAlreadyOccupiedError}
+        400: {"model": Union[
+            schemas.v1.common.err_responses.Schemas.LoginAlreadyOccupiedError,
+            schemas.v1.common.err_responses.Schemas.UnknownEmailDomainError,
+        ]}
     }
 )
 async def register(
@@ -27,5 +32,7 @@ async def register(
             )
         except exceptions.authentication.LoginAlreadyOccupiedError:
             raise schemas.v1.common.err_responses.Exceptions.LoginAlreadyOccupiedError()
+        except exceptions.identification.UnknownEmailDomainError:
+            raise schemas.v1.common.err_responses.Exceptions.UnknownEmailDomainError()
 
         return result

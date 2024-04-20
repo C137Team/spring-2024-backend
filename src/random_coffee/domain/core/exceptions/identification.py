@@ -9,7 +9,7 @@ class NoPendingIdentificationRequestsError(IdentificationServiceError):
     pass
 
 
-class EmailNotBelongsToAnyOrganisation(IdentificationServiceError):
+class UnknownEmailDomainError(IdentificationServiceError):
     pass
 
 

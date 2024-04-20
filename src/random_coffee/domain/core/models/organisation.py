@@ -1,12 +1,7 @@
 from __future__ import annotations
 
-from typing import Optional, Union, TYPE_CHECKING
-from typing_extensions import TypeAlias
+from typing import TYPE_CHECKING
 
-from dataclasses import dataclass
-from datetime import datetime
-
-from sqlalchemy import ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from random_coffee.infrastructure.models import BuiltinSubtypeMixin

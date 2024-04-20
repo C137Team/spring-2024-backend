@@ -2,8 +2,11 @@ from typing import Optional
 
 from sqlalchemy import select, func
 
+from random_coffee.domain.core.models import NotificationDestination
 from random_coffee.domain.core.models.account import Account
 from random_coffee.domain.core.models.person import Person
+from random_coffee.infrastructure.notifier import NotifierBackendEnum
+from random_coffee.infrastructure.notifier.backends.base import NotifierBackend
 from random_coffee.infrastructure.repo import BaseRepo, BaseEntityRepo
 
 
@@ -31,13 +34,15 @@ class AllAccounts(BaseEntityRepo[Account]):
             password_hash=password_hash,
             person=person,
         )
-        self.session.add(obj)
+        self.session.add_all((
+            obj,
+        ))
         await self.session.flush()
         await self.session.refresh(obj)
 
         return obj
 
-    async def get_by_login(
+    async def with_login(
             self,
             login: str,
     ) -> Optional[Account]:
