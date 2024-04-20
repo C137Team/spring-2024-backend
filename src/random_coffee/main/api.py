@@ -89,7 +89,7 @@ def main():
     if environment.application_protocol == 'HTTP':
         uvicorn.run(
             app=f'{__name__}:app',
-            host="172.20.10.2",
+            host="0.0.0.0",
             port=8000,
             reload=environment.application_autoreload,
             reload_dirs=['src'],
