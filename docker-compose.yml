@@ -3,7 +3,7 @@ services:
     build:
       context: .
       network: host
-    command: random_coffee-api
+    command: random-coffee-api
     restart: unless-stopped
     ports:
       - ${APPLICATION_HOST}:${APPLICATION_PORT}:8000
