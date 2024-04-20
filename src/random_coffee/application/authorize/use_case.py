@@ -45,6 +45,7 @@ class Authorize(UseCase[AuthorizeDTO, AuthorizeResponseDTO]):
             raise InvalidCredentialsError()
 
         login = decoded_access_token.sub.login
+        print(login)
         account = await self.all_accounts.with_login(login=login)
 
         await self.authorization_service.authorize_account(

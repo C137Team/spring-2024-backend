@@ -4,6 +4,7 @@ from random_coffee.domain.core.adapters.identification_session import (
 from random_coffee.domain.core.adapters.organisation import AllOrganisations
 from random_coffee.domain.core.adapters.person import AllPersons
 from random_coffee.domain.core.models import Account, Person
+from random_coffee.domain.core.services.group import OrganisationService
 from random_coffee.infrastructure.security.confirmation_code import (
     generate_confirmation_code,
     get_confirmation_code_hash,
@@ -30,12 +31,13 @@ class IdentificationService(BaseService):
             all_organisations: AllOrganisations,
             access_service: AccessService,
             all_identification_sessions: AllIdentificationSessions,
-
+            organisation_service: OrganisationService,
     ):
         self.all_persons = all_persons
         self.all_organisations = all_organisations
         self.all_identification_sessions = all_identification_sessions
         self.access_service = access_service
+        self.organisation_service = organisation_service
 
     async def create_person(
             self,
@@ -82,6 +84,10 @@ class IdentificationService(BaseService):
                 person = await self.all_persons.with_id(i.person_id)
                 person.account_id = account.id
                 await self.all_persons.save(person)
+                await self.organisation_service.create_employee(
+                    person=person,
+                    organisation_id=i.organisation_id,
+                )
                 return person
         else:
             raise IdentificationConfirmationNotVerified()

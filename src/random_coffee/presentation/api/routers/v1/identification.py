@@ -27,7 +27,7 @@ class IdentificationConfirmationSchemeDTO(BaseDTO):
     "/me/account/identification/confirm",
     response_model=ConfirmIdentificationResponseDTO,
 )
-async def create_identification_request(
+async def confirm_identification(
         ioc: CoreIoCDep,
         current_account: Annotated[
             models.Account, Depends(dependencies.get_current.get_current_account)

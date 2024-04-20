@@ -30,7 +30,6 @@ class AttachPersonToTelegramAccount(
             telegram_s: DatabaseSyncService,
             all_accounts: AllAccounts,
             authentication_service: AuthenticationService,
-
     ):
         self.all_telegram_accounts = all_telegram_accounts
         self.all_persons = all_persons

@@ -16,14 +16,14 @@ class Employee(BaseRelationalEntity):
     __tablename__ = 'employee'
 
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
-    role: Mapped[Role] = mapped_column()
+    role: Mapped[Role] = mapped_column(default=Role.EMPLOYEE)
     person_id: Mapped[int] = mapped_column(ForeignKey("person.id"))
     organisation_id: Mapped[int] = mapped_column(ForeignKey("organisation.id"))
     created_at: Mapped[datetime] = mapped_column(default=datetime.now)
     deleted_at: Mapped[Optional[datetime]] = mapped_column()
 
     organisation: Mapped[Organisation] = relationship(back_populates="employees")
-    person: Mapped[Person] = relationship()
+    person: Mapped[Person] = relationship(lazy='selectin')
 
     __table_args__ = (
         Index(

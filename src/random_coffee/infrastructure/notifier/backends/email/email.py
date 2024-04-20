@@ -22,6 +22,8 @@ class EmailNotifierBackend(NotifierBackend):
                           internal_destination_identifier: str,
                           notification_content: EmailNotificationContentDTO,
                           priority: int | None = None) -> None:
+        print(f"Отправление сообщения {notification_content.text} "
+              f"на почту {internal_destination_identifier}")
         if isinstance(notification_content, str):
             notification_content = EmailNotificationContentDTO(
                 text=notification_content,

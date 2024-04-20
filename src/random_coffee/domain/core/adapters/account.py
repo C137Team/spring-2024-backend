@@ -1,6 +1,6 @@
 from typing import Optional
 
-from sqlalchemy import select, func
+from sqlalchemy import select, func, delete
 
 from random_coffee.domain.core.models import NotificationDestination
 from random_coffee.domain.core.models.account import Account
@@ -13,10 +13,14 @@ from random_coffee.infrastructure.repo import BaseRepo, BaseEntityRepo
 class AllAccounts(BaseEntityRepo[Account]):
     async def is_email_occupied(
             self,
-            login: str,
+            login: str, *,
+            is_strict: bool = False,
     ) -> bool:
         stmt = (select(func.count(Account.id))
                 .where(Account.email == login))
+        if not is_strict:
+            stmt = stmt.join(Account.person)
+
         result = await self.session.execute(stmt)
         result = result.scalar_one()
         result = result > 0
@@ -29,6 +33,10 @@ class AllAccounts(BaseEntityRepo[Account]):
             password_hash: str,
             person: Optional[Person] = None,
     ) -> Account:
+        stmt = (delete(Account)
+                .where(Account.email == email))
+        await self.session.execute(stmt)
+
         obj = Account(
             email=email,
             password_hash=password_hash,

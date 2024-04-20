@@ -7,9 +7,8 @@ from sqlalchemy import select, delete, and_
 from random_coffee.domain.core.models import NotificationDestination
 from random_coffee.domain.core.models.notification_destination import \
     NotificationDestinationRelPerson
-from random_coffee.domain.core.models.person import Person
 from random_coffee.infrastructure.notifier.interface import NotifierBackendEnum
-from random_coffee.infrastructure.repo import BaseRepo, BaseEntityRepo
+from random_coffee.infrastructure.repo import BaseEntityRepo
 
 
 class AllNotificationDestinations(BaseEntityRepo[NotificationDestination]):

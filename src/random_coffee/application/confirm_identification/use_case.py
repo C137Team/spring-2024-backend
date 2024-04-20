@@ -5,7 +5,7 @@ from random_coffee.application.confirm_identification.dto import (
 from random_coffee.domain.core.exceptions.authorization import (
     InvalidCredentialsError,
 )
-from random_coffee.domain.telegram.repos import AllAccounts
+from random_coffee.domain.core.adapters import AllAccounts
 from random_coffee.infrastructure.security.token import decode_access_token, \
     InvalidCredentialsError as SubdomainInvalidCredentialsError
 from random_coffee.infrastructure.bases.use_case import UseCase

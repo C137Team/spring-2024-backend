@@ -1,19 +1,24 @@
+import asyncio
 import locale
 
 import uvicorn
+from aiogram.methods import Request
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from sqladmin import Admin
-
+from apscheduler.schedulers.asyncio import AsyncIOScheduler
+from apscheduler import triggers
+from random_coffee.application.cleanup_wandering import CleanupWanderingDTO
+from random_coffee.application.proceed_wander import ProceedWanderDTO
 from random_coffee.infrastructure.database import engine, on_startup
 
 from random_coffee.presentation.api.routers import v1
 from random_coffee.presentation.api.admin import include_admin_views, auth_backend
 
 from random_coffee.infrastructure.config import environment
-
+from random_coffee.presentation.interactor_factory import CoreInteractorFactory
 
 app = FastAPI(title="RKSI API")
 
@@ -50,9 +55,34 @@ app.add_middleware(
 app.include_router(v1.router)
 
 
+async def prceed_wander():
+    print('prceed_wander')
+    ioc = CoreInteractorFactory()
+    async with ioc.proced_wander() as use_case:
+        response = await use_case(ProceedWanderDTO(
+            organisation_id=2,
+        ))
+    return response
+
+
+async def cleanup_wandering():
+    print('cleanup_wandering')
+    ioc = CoreInteractorFactory()
+    async with ioc.cleanup_wandering() as use_case:
+        response = await use_case(CleanupWanderingDTO(
+            organisation_id=2,
+        ))
+    return response
+
+
 @app.on_event("startup")
 async def on_application_startup():
     await on_startup()
+    scheduler = AsyncIOScheduler()
+    scheduler.add_job(prceed_wander, "interval", seconds=10)
+    scheduler.add_job(cleanup_wandering, "interval", seconds=30)
+    scheduler.start()
+    # scheduler.add_job()
 
 
 def main():

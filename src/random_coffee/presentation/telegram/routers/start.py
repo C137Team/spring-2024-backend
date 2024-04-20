@@ -1,6 +1,7 @@
 from aiogram import Router, types
 from aiogram.filters import CommandStart
 
+from random_coffee.application.common.dto import PersonDTO
 from random_coffee.infrastructure.aiogram.state_filter import (
     AuthenticationStateFilter,
 )
@@ -16,6 +17,7 @@ router = Router()
 )
 async def start_command_handler(
         message: types.Message,
+        person: PersonDTO,
 ):
     await message.answer(
         "Приветсвую тебя, путник!"

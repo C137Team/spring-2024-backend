@@ -10,6 +10,7 @@ from random_coffee.domain.core.models.employee import Employee
 class Administrator(Employee):
     __tablename__ = 'administrator'
 
+    id: Mapped[int] = mapped_column(ForeignKey("employee.id"), primary_key=True)
     administrator_created_at: Mapped[datetime] = mapped_column(default=datetime.now)
 
     __mapped_args__ = {

@@ -1,6 +1,6 @@
 from typing import (
     Generic, TypeVar, Optional, Iterable, ClassVar, get_origin, get_args,
-    AsyncIterable, Any,
+    AsyncIterable, Any, Sequence,
 )
 
 from di.dependent import Injectable
@@ -60,8 +60,16 @@ class BaseRepo(Injectable, Generic[RelationalObjectT]):
             obj: RelationalObjectT
     ) -> None:
         self.session.add(obj)
-        await self.session.flush()
-        return obj
+        await self.session.flush((obj,))
+        return None
+
+    async def save_all(
+            self,
+            objs: Sequence[RelationalObjectT]
+    ) -> None:
+        self.session.add_all(objs)
+        await self.session.flush(objs)
+        return None
 
     async def refresh(
             self,

@@ -22,7 +22,7 @@ class MeetingParticipant(BaseRelationalEntity):
     created_at: Mapped[datetime] = mapped_column(default=datetime.now)
 
     meeting: Mapped[Meeting] = relationship()
-    employee: Mapped[Employee] = relationship()
+    employee: Mapped[Employee] = relationship(lazy='selectin')
 
     __table_args__ = (
         UniqueConstraint(

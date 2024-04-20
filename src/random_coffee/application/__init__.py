@@ -9,4 +9,6 @@ from . import (
     attach_person_to_telegram_account,
     confirm_identification,
     upsert_telegram_entities,
+    proceed_wander,
+    cleanup_wandering,
 )

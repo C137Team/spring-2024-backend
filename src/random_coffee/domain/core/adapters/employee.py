@@ -2,9 +2,11 @@ from __future__ import annotations
 
 from sqlalchemy import select
 
-from random_coffee.domain.core.models import Role
 from random_coffee.domain.core.models.employee import Employee
-from random_coffee.infrastructure.repo import BaseRepo, BaseEntityRepo
+from random_coffee.domain.core.models.wandering_employee import (
+    WanderingEmployee,
+)
+from random_coffee.infrastructure.repo import BaseEntityRepo
 
 
 class AllEmployees(BaseEntityRepo[Employee]):
@@ -26,5 +28,15 @@ class AllEmployees(BaseEntityRepo[Employee]):
     ):
         stmt = (select(Employee)
                 .where(Employee.person_id == person_id)
+                .where(Employee.organisation_id == organisation_id))
+        return await self.session.scalar(stmt)
+
+    async def wich_doesnt_wandering(
+            self,
+            organisation_id: int,
+    ):
+        stmt = (select(Employee)
+                .outerjoin(WanderingEmployee)
+                .where(WanderingEmployee.id.is_(None))
                 .where(Employee.organisation_id == organisation_id))
         return await self.session.scalars(stmt)

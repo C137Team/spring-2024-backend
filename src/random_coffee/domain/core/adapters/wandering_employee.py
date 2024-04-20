@@ -1,0 +1,21 @@
+from typing import Iterable
+
+from sqlalchemy import select
+
+from random_coffee.domain.core.models import Employee
+from random_coffee.domain.core.models.wandering_employee import (
+    WanderingEmployee,
+)
+
+from random_coffee.infrastructure.repo import BaseEntityRepo
+
+
+class AllWanderingEmployees(BaseEntityRepo[WanderingEmployee]):
+    async def within_organisation(
+            self,
+            organisation_id: int,
+    ) -> Iterable[WanderingEmployee]:
+        stmt = (select(WanderingEmployee)
+                .join(WanderingEmployee.employee)
+                .where(Employee.organisation_id == organisation_id))
+        return await self.session.scalars(stmt)

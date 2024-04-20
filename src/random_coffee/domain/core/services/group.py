@@ -24,11 +24,11 @@ class OrganisationService(BaseService):
     async def create_employee(
             self,
             person: models.Person,
-            organisation: models.Organisation,
+            organisation_id: int,
     ) -> models.Employee:
         employee = await self.all_employees.with_value(
             person_id=person.id,
-            organisation_id=organisation.id,
+            organisation_id=organisation_id,
         )
 
         if employee is not None:
@@ -36,7 +36,7 @@ class OrganisationService(BaseService):
 
         employee = await self.all_employees.create(
             person_id=person.id,
-            organisation_id=organisation.id,
+            organisation_id=organisation_id,
         )
         return employee
 
