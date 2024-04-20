@@ -15,6 +15,12 @@ class TelegramInteractorFactory(BaseInteractorFactory):
     ) -> WiredUseCase[application.merge_telegram_account.MergeTelegramAccount]:
         yield use_case
 
+    @use_case_wrapper[application.upsert_telegram_entities.UpsertTelegramEntities]()
+    async def upsert_telegram_entities(
+            self: TelegramInteractorFactory, use_case: application.upsert_telegram_entities.UpsertTelegramEntities,
+    ) -> WiredUseCase[application.upsert_telegram_entities.UpsertTelegramEntities]:
+        yield use_case
+
     @use_case_wrapper[
         application.attach_person_to_telegram_account.AttachPersonToTelegramAccount]()
     async def attach_person_to_telegram_account(

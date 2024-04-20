@@ -8,4 +8,5 @@ from . import (
     write_utm,
     attach_person_to_telegram_account,
     confirm_identification,
+    upsert_telegram_entities,
 )

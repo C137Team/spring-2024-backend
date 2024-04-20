@@ -52,3 +52,15 @@ class AllAccounts(BaseEntityRepo[Account]):
         result = result.scalar_one_or_none()
 
         return result
+
+    async def with_person(
+            self,
+            person_id: int,
+    ):
+        stmt = (select(Account)
+                .join(Person)
+                .where(Person.id == person_id))
+        result = await self.session.execute(stmt)
+        result = result.scalar_one_or_none()
+
+        return result
