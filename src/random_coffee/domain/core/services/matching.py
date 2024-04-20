@@ -36,9 +36,7 @@ class MatchingStrategyFullyBatched(MatchingStrategy):
             matching_group: MatchingGroup,
     ) -> MatchingResult:
         employees = matching_group.employees.copy()
-        print(employees)
         if len(employees) <= 1:
-            print('Len if emps is less or eq to one, so unmatched')
             return MatchingResult(
                 planned_meetings=set(),
                 unmatched_employees=set(employees),
@@ -49,7 +47,6 @@ class MatchingStrategyFullyBatched(MatchingStrategy):
         ]
         if len(subgroups[-1]) == 1:
             subgroups[-2] += subgroups[-1]
-        print(f"subgroups: {subgroups}")
 
         planned_meetings = {
             Meeting(participants=i)

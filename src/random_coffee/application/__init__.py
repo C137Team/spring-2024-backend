@@ -11,4 +11,5 @@ from . import (
     upsert_telegram_entities,
     proceed_wander,
     cleanup_wandering,
+    edit_person,
 )

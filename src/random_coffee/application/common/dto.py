@@ -29,6 +29,9 @@ from random_coffee.domain.telegram.models import (
 class PersonDTO(BaseModel):
     id: models.person.PersonId
     full_name: str
+    age: int
+    description: str
+    rost: str
     display_text: str
 
     @classmethod

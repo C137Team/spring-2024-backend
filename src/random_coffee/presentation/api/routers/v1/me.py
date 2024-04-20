@@ -3,7 +3,10 @@ from typing import Annotated
 from fastapi import APIRouter, Depends
 
 from random_coffee.application.common.dto import PersonDTO, AccountDTO
+from random_coffee.application.edit_person import EditPersonDTO, \
+    EditPersonResponseDTO
 from random_coffee.presentation.api import schemas, dependencies
+from random_coffee.presentation.api.dependencies.ioc import CoreIoCDep
 
 router = APIRouter(tags=['Me'])
 
@@ -16,6 +19,22 @@ async def get_me(
         person: Annotated[PersonDTO, Depends(dependencies.get_current.get_current_person)]
 ) -> PersonDTO:
     return person
+
+
+@router.put(
+    '/me/person',
+    response_model=EditPersonResponseDTO,
+)
+async def get_me(
+        person: Annotated[PersonDTO, Depends(dependencies.get_current.get_current_person)],
+        payload: EditPersonDTO,
+        ioc: CoreIoCDep,
+) -> EditPersonResponseDTO:
+    payload.entity_id = person.id
+    async with ioc.edit_person() as use_case:
+        response = await use_case(payload)
+
+    return response
 
 
 @router.get(

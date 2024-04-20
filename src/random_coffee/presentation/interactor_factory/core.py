@@ -62,3 +62,9 @@ class CoreInteractorFactory(BaseInteractorFactory):
             self: CoreInteractorFactory, use_case: application.cleanup_wandering.CleanupWandering,
     ) -> WiredUseCase[application.cleanup_wandering.CleanupWandering]:
         yield use_case
+
+    @use_case_wrapper[application.edit_person.EditPerson]()
+    async def edit_person(
+            self: CoreInteractorFactory, use_case: application.edit_person.EditPerson,
+    ) -> WiredUseCase[application.edit_person.EditPerson]:
+        yield use_case

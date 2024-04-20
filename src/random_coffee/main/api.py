@@ -56,7 +56,6 @@ app.include_router(v1.router)
 
 
 async def prceed_wander():
-    print('prceed_wander')
     ioc = CoreInteractorFactory()
     async with ioc.proced_wander() as use_case:
         response = await use_case(ProceedWanderDTO(
@@ -66,7 +65,6 @@ async def prceed_wander():
 
 
 async def cleanup_wandering():
-    print('cleanup_wandering')
     ioc = CoreInteractorFactory()
     async with ioc.cleanup_wandering() as use_case:
         response = await use_case(CleanupWanderingDTO(
