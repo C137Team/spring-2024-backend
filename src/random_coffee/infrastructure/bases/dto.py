@@ -1,0 +1,10 @@
+from pydantic import BaseModel, ConfigDict
+
+
+class BaseDTO(BaseModel):
+    model_config = ConfigDict(frozen=True)
+
+
+__all__ = [
+    "BaseDTO"
+]

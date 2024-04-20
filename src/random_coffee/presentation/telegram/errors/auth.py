@@ -1,0 +1,2 @@
+class AccountNotIdentifiedError(Exception):
+    pass

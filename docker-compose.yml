@@ -1,0 +1,48 @@
+services:
+  api:
+    build:
+      context: .
+      network: host
+    command: random_coffee-api
+    restart: unless-stopped
+    ports:
+      - ${APPLICATION_HOST}:${APPLICATION_PORT}:8000
+    env_file:
+      .env
+    environment:
+      POSTGRES_HOST: database
+      REDIS_HOST: broker
+      CELERY_CONFIG_MODULE: random_coffee.celeryconfig
+    depends_on:
+      - database
+      - broker
+    volumes:
+      - .:/app
+  database:
+    image: "postgres:16"
+    env_file:
+      .env
+    ports:
+      - 127.0.0.1:${POSTGRES_PORT}:5432
+    volumes:
+      - database:/var/lib/postgresql/data
+  broker:
+    image: "redis:7"
+    ports:
+      - ${REDIS_HOST}:${REDIS_PORT}:6379
+    volumes:
+      - broker:/data
+  celery:
+    restart: unless-stopped
+    build:
+      context: .
+      network: host
+    command: celery worker
+    environment:
+      REDIS_HOST: broker
+      CELERY_CONFIG_MODULE: random_coffee.celeryconfig
+    depends_on:
+      - broker
+volumes:
+  database:
+  broker:
