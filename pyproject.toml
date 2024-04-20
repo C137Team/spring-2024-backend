@@ -27,7 +27,8 @@ dependencies = [
     "di[anyio]~=0.76.0",  # warning: minor version bump can contain breaking changes (from documention)
     "transliterate~=1.10.2",
     "psycopg",
-    "greenlet"
+    "greenlet",
+    "apscheduler"
 ]
 
 
