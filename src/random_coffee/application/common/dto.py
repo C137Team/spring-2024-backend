@@ -135,7 +135,7 @@ class MeetingParticipantDTO(BaseModel):
 class MeetingDTO(BaseModel):
     id: int
     state: MeetingStateEnum
-    curcumstances: MeetingCircumstancesDTO | None
+    circumstances: MeetingCircumstancesDTO | None
     participants: list[MeetingParticipantDTO]
     created_at: datetime
 
@@ -146,8 +146,8 @@ class MeetingDTO(BaseModel):
         return cls(
             id=model.id,
             state=model.state,
-            curcumstances=await MeetingCircumstancesDTO.from_model(
-                await model.awaitable_attrs.curcumstances,
+            circumstances=await MeetingCircumstancesDTO.from_model(
+                await model.awaitable_attrs.circumstances,
             ),
             participants=await MeetingParticipantDTO.from_model(
                 await model.awaitable_attrs.participants,
