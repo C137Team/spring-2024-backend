@@ -56,6 +56,8 @@ app.add_middleware(
 app.include_router(v1.router)
 
 
+# todo: move followong workers below domain layer
+
 async def prceed_wander():
     print('PROCEED WANDER')
     ioc = CoreInteractorFactory()
