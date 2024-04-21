@@ -12,8 +12,8 @@ from random_coffee.presentation.api.dependencies.ioc import CoreIoCDep
 router = APIRouter(tags=["Me"])
 
 
-class GetMyMeetingDTO(BaseDTO):
-    meeting: MeetingDTO | None
+class GetMyMeetingResponseDTO(BaseDTO):
+    entity: MeetingDTO | None
 
 
 class EditMyMeetingDTO(BaseDTO):
@@ -25,7 +25,7 @@ class EditMyMeetingDTO(BaseDTO):
 
 @router.get(
     "/me/meeting",
-    response_model=GetMyMeetingDTO,
+    response_model=GetMyMeetingResponseDTO,
 )
 async def get_my_meeting(
         person: Annotated[PersonDTO, Depends(dependencies.get_current.get_current_person)],
@@ -37,12 +37,14 @@ async def get_my_meeting(
         )
         meeting_model = meeting and await MeetingDTO.from_model(meeting)
 
-    return meeting_model
+    return GetMyMeetingResponseDTO(
+        entity=meeting_model,
+    )
 
 
 @router.post(
     "/me/meeting/edit",
-    response_model=GetMyMeetingDTO,
+    response_model=GetMyMeetingResponseDTO,
 )
 async def edit_my_meeting(
         person: Annotated[PersonDTO, Depends(dependencies.get_current.get_current_person)],
@@ -54,7 +56,9 @@ async def edit_my_meeting(
         )
         meeting_model = meeting and await MeetingDTO.from_model(meeting)
 
-    return meeting_model
+    return GetMyMeetingResponseDTO(
+        entity=meeting_model,
+    )
 
 
 class WanderMyMeetingResponseDTO(BaseDTO):
