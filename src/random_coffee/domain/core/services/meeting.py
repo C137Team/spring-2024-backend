@@ -43,12 +43,17 @@ class MeetingService:
         result = await self.matching_strategy(matching_group)
 
         for i in result.planned_meetings:
-            persons = [j.employee.person for j in i.participants]
-            for j in persons:
-                others = set(persons) - {j}
+            persons = [j.person for j in i.participants]
+            for emp in i.participants:
+                person = await emp.awaitable_attrs.person
+                await self.all_wandering_employees.delete_by_employee_id(
+                    emplyee_id=emp.id,
+                )
+                others = set(persons) - {person}
 
                 await self.notification_service.notify_person(
                     person_id=j.id,
+                    on_no_destinations='ignore',
                     notification_content=
                     f"У вас новый мэтч! Это {', '.join(others)}"
                 )

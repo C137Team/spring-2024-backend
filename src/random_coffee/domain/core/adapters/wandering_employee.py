@@ -1,6 +1,6 @@
 from typing import Iterable
 
-from sqlalchemy import select
+from sqlalchemy import select, delete
 
 from random_coffee.domain.core.models import Employee
 from random_coffee.domain.core.models.wandering_employee import (
@@ -27,3 +27,11 @@ class AllWanderingEmployees(BaseEntityRepo[WanderingEmployee]):
         stmt = (select(WanderingEmployee)
                 .where(WanderingEmployee.employee_id == emplyee_id))
         return await self.session.scalar(stmt)
+
+    async def delete_by_employee_id(
+            self,
+            emplyee_id: int,
+    ):
+        stmt = (delete(WanderingEmployee)
+                .where(WanderingEmployee.employee_id == emplyee_id))
+        return None

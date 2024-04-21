@@ -40,6 +40,8 @@ class NotificationService(BaseService):
 
         if len(destinations) == 0:
             if on_no_destinations == 'ignore':
+                print(f"Ignored notfiication to {person_id}: "
+                      f"{notification_content}")
                 return None
             elif on_no_destinations == 'raise':
                 raise PersonHasNoNotificationDestinations(person_id)
