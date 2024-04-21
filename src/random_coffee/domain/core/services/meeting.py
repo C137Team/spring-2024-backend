@@ -52,7 +52,7 @@ class MeetingService:
                 others = set(persons) - {person}
 
                 await self.notification_service.notify_person(
-                    person_id=j.id,
+                    person_id=person.id,
                     on_no_destinations='ignore',
                     notification_content=
                     f"У вас новый мэтч! Это {', '.join(others)}"
