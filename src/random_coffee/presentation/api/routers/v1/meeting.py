@@ -71,6 +71,9 @@ async def wander_my_meeting(
         ioc: CoreIoCDep,
 ):
     async with ioc.passthrough() as ps:
-        await ps.meeting_service.wander_meeting(
+        response = await ps.meeting_service.wander_meeting(
             employee_id=employee.id,
         )
+    return WanderMyMeetingResponseDTO(
+
+    )
