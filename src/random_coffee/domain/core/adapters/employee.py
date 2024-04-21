@@ -2,7 +2,10 @@ from __future__ import annotations
 
 from sqlalchemy import select
 
+from random_coffee.domain.core.models import Meeting
 from random_coffee.domain.core.models.employee import Employee
+from random_coffee.domain.core.models.meeting_participant import \
+    MeetingParticipant
 from random_coffee.domain.core.models.wandering_employee import (
     WanderingEmployee,
 )

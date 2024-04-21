@@ -60,7 +60,7 @@ async def prceed_wander():
     ioc = CoreInteractorFactory()
     async with ioc.proced_wander() as use_case:
         response = await use_case(ProceedWanderDTO(
-            organisation_id=2,
+            organisation_id=1,
         ))
     return response
 
@@ -80,6 +80,9 @@ async def update_meeting_statuses():
     async with ioc.passthrough() as ps:
         for i in await ps.all_meetings.all():
             circumstance: MeetingCircumstances = await i.awaitable_attrs.circumstances
+
+            if circumstance is None:
+                continue
 
             if (i.state is MeetingStateEnum.SCHEDULED
                     and circumstance.starts_at <= datetime.now()):

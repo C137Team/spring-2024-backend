@@ -34,4 +34,5 @@ class AllWanderingEmployees(BaseEntityRepo[WanderingEmployee]):
     ):
         stmt = (delete(WanderingEmployee)
                 .where(WanderingEmployee.employee_id == emplyee_id))
+        await self.session.execute(stmt)
         return None
