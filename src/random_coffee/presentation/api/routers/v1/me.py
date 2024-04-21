@@ -21,8 +21,8 @@ async def get_me(
     return person
 
 
-@router.put(
-    '/me/person',
+@router.post(
+    '/me/person/edit',
     response_model=EditPersonResponseDTO,
 )
 async def get_me(
