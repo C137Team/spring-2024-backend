@@ -1,4 +1,5 @@
 import locale
+from datetime import datetime, timedelta
 
 import uvicorn
 
@@ -9,6 +10,9 @@ from sqladmin import Admin
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from random_coffee.application.cleanup_wandering import CleanupWanderingDTO
 from random_coffee.application.proceed_wander import ProceedWanderDTO
+from random_coffee.domain.core.models.meeting_circumstances import \
+    MeetingCircumstances
+from random_coffee.domain.core.models.meeting_state import MeetingStateEnum
 from random_coffee.infrastructure.database import engine, on_startup
 
 from random_coffee.presentation.api.routers import v1
@@ -70,12 +74,32 @@ async def cleanup_wandering():
     return response
 
 
+async def update_meeting_statuses():
+    ioc = CoreInteractorFactory()
+    print('Process status update')
+    async with ioc.passthrough() as ps:
+        for i in await ps.all_meetings.all():
+            circumstance: MeetingCircumstances = await i.awaitable_attrs.circumstances
+
+            if i.state is MeetingStateEnum.SCHEDULED and circumstance.starts_at <= datetime.now():
+                i.state = MeetingStateEnum.OCCUR
+
+            if (i.state is MeetingStateEnum.OCCUR
+                and circumstance.starts_at
+                    + timedelta(minutes=circumstance.duration_m)
+                    <= datetime.now()):
+                i.state = MeetingStateEnum.COMPLETED
+
+            await ps.all_meetings.save(i)
+
+
 @app.on_event("startup")
 async def on_application_startup():
     await on_startup()
     scheduler = AsyncIOScheduler()
-    scheduler.add_job(prceed_wander, "interval", seconds=10)
-    scheduler.add_job(cleanup_wandering, "interval", seconds=30)
+    # scheduler.add_job(prceed_wander, "interval", seconds=10)
+    scheduler.add_job(cleanup_wandering, "interval", seconds=10)
+    scheduler.add_job(update_meeting_statuses, "interval", seconds=5)
     scheduler.start()
     # scheduler.add_job()
 
