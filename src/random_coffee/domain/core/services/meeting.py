@@ -55,7 +55,7 @@ class MeetingService:
                     person_id=person.id,
                     on_no_destinations='ignore',
                     notification_content=
-                    f"У вас новый мэтч! Это {', '.join(others)}"
+                    f"У вас новый мэтч! Это {', '.join([k.full_name for k in others])}"
                 )
         for i in result.unmatched_employees:
             await self.notification_service.notify_person(
