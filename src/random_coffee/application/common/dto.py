@@ -143,11 +143,12 @@ class MeetingDTO(BaseModel):
     async def from_model(
             cls, model: Meeting,
     ):
+        circumstances = await model.awaitable_attrs.circumstances
         return cls(
             id=model.id,
             state=model.state,
-            circumstances=await MeetingCircumstancesDTO.from_model(
-                await model.awaitable_attrs.circumstances,
+            circumstances=circumstances and await MeetingCircumstancesDTO.from_model(
+               circumstances,
             ),
             participants=await MeetingParticipantDTO.from_model(
                 await model.awaitable_attrs.participants,
