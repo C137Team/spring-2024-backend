@@ -9,7 +9,7 @@ from random_coffee.presentation.api import dependencies
 from random_coffee.presentation.api.dependencies.ioc import CoreIoCDep
 
 
-router = APIRouter()
+router = APIRouter(tags=["Meet"])
 
 
 class GetMyMeetingDTO(BaseDTO):
@@ -24,7 +24,7 @@ class EditMyMeetingDTO(BaseDTO):
 
 
 @router.get(
-    "/v1/me/meeting",
+    "/me/meeting",
     response_model=GetMyMeetingDTO,
 )
 async def get_my_meeting(
@@ -41,7 +41,7 @@ async def get_my_meeting(
 
 
 @router.put(
-    "/v1/me/meeting",
+    "/me/meeting",
     response_model=GetMyMeetingDTO,
 )
 async def edit_my_meeting(
@@ -62,7 +62,7 @@ class WanderMyMeetingResponseDTO(BaseDTO):
 
 
 @router.post(
-    "/v1/me/meeting/wander",
+    "/me/meeting/wander",
     response_model=WanderMyMeetingResponseDTO,
 )
 async def wander_my_meeting(
