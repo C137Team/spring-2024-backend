@@ -125,7 +125,7 @@ class MeetingParticipantDTO(BaseModel):
             model: MeetingParticipant,
     ):
         return cls(
-            employee=EmployeeDTO.from_model(
+            employee=await EmployeeDTO.from_model(
                 model,  # todo: adjust
             )
         )
