@@ -68,3 +68,9 @@ class CoreInteractorFactory(BaseInteractorFactory):
             self: CoreInteractorFactory, use_case: application.edit_person.EditPerson,
     ) -> WiredUseCase[application.edit_person.EditPerson]:
         yield use_case
+
+    @use_case_wrapper[application.passthrough.Passthrough]()
+    async def passthrough(
+            self: CoreInteractorFactory, use_case: application.passthrough.Passthrough,
+    ) -> WiredUseCase[application.passthrough.Passthrough]:
+        yield use_case

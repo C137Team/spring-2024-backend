@@ -1,15 +1,12 @@
-import asyncio
 import locale
 
 import uvicorn
-from aiogram.methods import Request
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from sqladmin import Admin
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
-from apscheduler import triggers
 from random_coffee.application.cleanup_wandering import CleanupWanderingDTO
 from random_coffee.application.proceed_wander import ProceedWanderDTO
 from random_coffee.infrastructure.database import engine, on_startup

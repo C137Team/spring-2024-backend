@@ -10,6 +10,14 @@ from random_coffee.infrastructure.repo import BaseEntityRepo
 
 
 class AllEmployees(BaseEntityRepo[Employee]):
+    async def with_person_id(
+            self,
+            person_id: int,
+    ):
+        stmt = (select(Employee)
+                .where(Employee.person_id == person_id))
+        return await self.session.scalar(stmt)
+
     async def create(
             self,
             person_id: int,

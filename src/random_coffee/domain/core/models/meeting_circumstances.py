@@ -28,7 +28,8 @@ class MeetingCircumstances(BaseRelationalEntity):
     starts_at: Mapped[datetime] = mapped_column()
     duration_m: Mapped[int] = mapped_column()
     format: Mapped[MeetingFormatEnum] = mapped_column()
-
+    location_latitude: Mapped[float] =  mapped_column()
+    location_longutude: Mapped[float] = mapped_column()
     created_at: Mapped[datetime] = mapped_column(default=datetime.now)
 
     def __str__(self):  # for admin panel

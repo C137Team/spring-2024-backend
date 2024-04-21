@@ -8,6 +8,8 @@ from random_coffee.domain.core.models import Meeting, Person, Employee
 from random_coffee.domain.core.models.matching_group import MatchingGroup
 from random_coffee.domain.core.models.meeting_participant import \
     MeetingParticipant
+from random_coffee.domain.core.models.wandering_employee import \
+    WanderingEmployee
 from random_coffee.domain.core.services.matching import MatchingStrategy, \
     MatchingStrategyFullyBatched
 from random_coffee.domain.core.services.notification import NotificationService
@@ -60,3 +62,14 @@ class MeetingService:
 
         await self.all_meetings.save_all(list(result.planned_meetings))
         await self.all_meetings.commit()
+
+    async def wander_meeting(
+            self,
+            employee_id: int,
+    ):
+        wanderring = await self.all_wandering_employees.with_employee_id(employee_id)
+        if wanderring is None:
+            new_w = WanderingEmployee(
+                employee_id=employee_id,
+            )
+            await self.all_wandering_employees.save(new_w)

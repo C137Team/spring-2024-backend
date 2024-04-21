@@ -19,3 +19,11 @@ class AllWanderingEmployees(BaseEntityRepo[WanderingEmployee]):
                 .join(WanderingEmployee.employee)
                 .where(Employee.organisation_id == organisation_id))
         return await self.session.scalars(stmt)
+
+    async def with_employee_id(
+            self,
+            emplyee_id: int,
+    ):
+        stmt = (select(WanderingEmployee)
+                .where(WanderingEmployee.employee_id == emplyee_id))
+        return await self.session.scalar(stmt)

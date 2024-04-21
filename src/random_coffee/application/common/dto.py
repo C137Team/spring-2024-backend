@@ -67,6 +67,8 @@ class MeetingCircumstancesDTO(BaseModel):
     starts_at: datetime
     duration_m: int
     format: MeetingFormatEnum
+    location_latitude: float
+    location_longitude: float
 
     @classmethod
     async def from_model(
@@ -77,6 +79,8 @@ class MeetingCircumstancesDTO(BaseModel):
             starts_at=model.starts_at,
             duration_m=model.duration_m,
             format=model.format,
+            location_latitude=model.location_latitude,
+            location_longutude=model.location_longutude,
         )
 
 

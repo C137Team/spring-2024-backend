@@ -12,4 +12,5 @@ from . import (
     proceed_wander,
     cleanup_wandering,
     edit_person,
+    passthrough,
 )
