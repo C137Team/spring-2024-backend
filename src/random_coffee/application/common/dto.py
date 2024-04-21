@@ -28,10 +28,10 @@ from random_coffee.domain.telegram.models import (
 
 class PersonDTO(BaseModel):
     id: models.person.PersonId
-    full_name: str
-    age: int
-    description: str
-    rost: str
+    full_name: str | None
+    age: int | None
+    description: str | None
+    post: str | None
     display_text: str
 
     @classmethod
@@ -41,6 +41,9 @@ class PersonDTO(BaseModel):
         return cls(
             id=model.id,
             full_name=model.full_name,
+            age=model.age,
+            description=model.description,
+            post=model.post,
             display_text=model.full_name,
         )
 
