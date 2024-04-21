@@ -150,9 +150,11 @@ class MeetingDTO(BaseModel):
             circumstances=circumstances and await MeetingCircumstancesDTO.from_model(
                circumstances,
             ),
-            participants=await MeetingParticipantDTO.from_model(
-                await model.awaitable_attrs.participants,
-            ),
+            participants=[
+                await MeetingParticipantDTO.from_model(
+                    i,
+                ) for i in await model.awaitable_attrs.participants
+            ],
             created_at=model.created_at,
         )
 
