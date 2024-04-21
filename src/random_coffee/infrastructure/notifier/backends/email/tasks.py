@@ -20,7 +20,7 @@ def _execute(
         content: EmailNotificationContentDTO,
 ):
     msg = EmailMessage()
-    msg['Subject'] = "Email subject"
+    msg['Subject'] = "Код подтверждения Random Coffee"
     msg['From'] = environment.email_address
     msg['To'] = destination_email_address
     msg.set_content(content.text)
