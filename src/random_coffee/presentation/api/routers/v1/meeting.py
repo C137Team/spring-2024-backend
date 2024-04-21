@@ -35,7 +35,7 @@ async def get_my_meeting(
         meeting = await ps.all_meetings.active_for_person(
             person_id=person.id,
         )
-        meeting_model = await MeetingDTO.from_model(meeting)
+        meeting_model = meeting and await MeetingDTO.from_model(meeting)
 
     return meeting_model
 
@@ -52,7 +52,7 @@ async def edit_my_meeting(
         meeting = await ps.all_meetings.active_for_person(
             person_id=person.id,
         )
-        meeting_model = await MeetingDTO.from_model(meeting)
+        meeting_model = meeting and await MeetingDTO.from_model(meeting)
 
     return meeting_model
 
