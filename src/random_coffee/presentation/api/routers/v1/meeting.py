@@ -40,8 +40,8 @@ async def get_my_meeting(
     return meeting_model
 
 
-@router.put(
-    "/me/meeting",
+@router.post(
+    "/me/meeting/edit",
     response_model=GetMyMeetingDTO,
 )
 async def edit_my_meeting(
