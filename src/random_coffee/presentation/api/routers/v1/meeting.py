@@ -9,7 +9,7 @@ from random_coffee.presentation.api import dependencies
 from random_coffee.presentation.api.dependencies.ioc import CoreIoCDep
 
 
-router = APIRouter(tags=["Meet"])
+router = APIRouter(tags=["Me"])
 
 
 class GetMyMeetingDTO(BaseDTO):
