@@ -76,12 +76,13 @@ async def cleanup_wandering():
 
 async def update_meeting_statuses():
     ioc = CoreInteractorFactory()
-    print('Process status update')
+
     async with ioc.passthrough() as ps:
         for i in await ps.all_meetings.all():
             circumstance: MeetingCircumstances = await i.awaitable_attrs.circumstances
 
-            if i.state is MeetingStateEnum.SCHEDULED and circumstance.starts_at <= datetime.now():
+            if (i.state is MeetingStateEnum.SCHEDULED
+                    and circumstance.starts_at <= datetime.now()):
                 i.state = MeetingStateEnum.OCCUR
 
             if (i.state is MeetingStateEnum.OCCUR

@@ -97,6 +97,7 @@ class MeetingCircumstancesDTO(BaseModel):
 
 
 class EmployeeDTO(BaseModel):
+    id: int
     role: Role
     person: PersonDTO
 
@@ -107,6 +108,7 @@ class EmployeeDTO(BaseModel):
     ):
         person = await model.awaitable_attrs.person
         return cls(
+            id=model.id,
             role=model.role,
             person=await PersonDTO.from_model(
                 model=person,
