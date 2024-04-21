@@ -124,10 +124,9 @@ class MeetingParticipantDTO(BaseModel):
             cls,
             model: MeetingParticipant,
     ):
-        employee = await model.awaitable_attrs.emplyee
         return cls(
             employee=EmployeeDTO.from_model(
-                employee,
+                model,  # todo: adjust
             )
         )
 
