@@ -8,8 +8,8 @@ from random_coffee.infrastructure.dto import BaseDTO
 
 
 class UpsertTelegramEntitiesDTO(BaseDTO):
-    user: aiogram.types.User
-    chat: aiogram.types.Chat
+    user: aiogram.types.User | None = None
+    chat: aiogram.types.Chat | None = None
 
 
 @dataclass
