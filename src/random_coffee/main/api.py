@@ -103,8 +103,8 @@ async def update_meeting_statuses():
 async def on_application_startup():
     await on_startup()
     scheduler = AsyncIOScheduler()
-    # scheduler.add_job(prceed_wander, "interval", seconds=10)
-    scheduler.add_job(cleanup_wandering, "interval", seconds=10)
+    scheduler.add_job(prceed_wander, "interval", seconds=60)
+    scheduler.add_job(cleanup_wandering, "interval", seconds=20)
     scheduler.add_job(update_meeting_statuses, "interval", seconds=5)
     scheduler.start()
     # scheduler.add_job()
