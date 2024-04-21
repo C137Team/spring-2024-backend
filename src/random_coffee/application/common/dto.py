@@ -26,12 +26,16 @@ from random_coffee.domain.telegram.models import (
 )
 
 
+BOT_URL = "http://t.me/coffee137_bot"
+
+
 class PersonDTO(BaseModel):
     id: models.person.PersonId
     full_name: str | None
     age: int | None
     description: str | None
     post: str | None
+    attach_telegram_url: str | None
     display_text: str
 
     @classmethod
@@ -40,6 +44,11 @@ class PersonDTO(BaseModel):
     ):
         return cls(
             id=model.id,
+            # todo: url security issue
+            attach_telegram_url=
+            f"{BOT_URL}?start={model.id}"
+            if model.telegram_account_id is None
+            else None,
             full_name=model.full_name,
             age=model.age,
             description=model.description,

@@ -1,3 +1,4 @@
+from random_coffee.domain.core.adapters import AllPersons
 from random_coffee.domain.core.services import AuthenticationService
 
 from random_coffee.application.login.dto import LoginDTO, LoginResponseDTO
@@ -11,7 +12,9 @@ class Login(UseCase[LoginDTO, LoginResponseDTO]):
     def __init__(
             self,
             authentication_service: AuthenticationService,
+            all_persons: AllPersons,
     ):
+        self.all_persons = all_persons
         self.authentication_service = authentication_service
 
     async def __call__(self, payload: LoginDTO) -> LoginResponseDTO:
