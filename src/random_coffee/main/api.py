@@ -69,7 +69,7 @@ async def cleanup_wandering():
     ioc = CoreInteractorFactory()
     async with ioc.cleanup_wandering() as use_case:
         response = await use_case(CleanupWanderingDTO(
-            organisation_id=2,
+            organisation_id=1,
         ))
     return response
 
