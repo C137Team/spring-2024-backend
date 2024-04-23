@@ -28,7 +28,7 @@ dependencies = [
     "transliterate~=1.10.2",
     "psycopg",
     "greenlet",
-    "apscheduler"
+    "apscheduler",
 ]
 
 

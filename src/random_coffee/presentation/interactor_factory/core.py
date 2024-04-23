@@ -51,18 +51,6 @@ class CoreInteractorFactory(BaseInteractorFactory):
     ) -> WiredUseCase[application.confirm_identification.ConfirmIdentification]:
         yield use_case
 
-    @use_case_wrapper[application.proceed_wander.ProceedWander]()
-    async def proced_wander(
-            self: CoreInteractorFactory, use_case: application.proceed_wander.ProceedWander,
-    ) -> WiredUseCase[application.proceed_wander.ProceedWander]:
-        yield use_case
-
-    @use_case_wrapper[application.cleanup_wandering.CleanupWandering]()
-    async def cleanup_wandering(
-            self: CoreInteractorFactory, use_case: application.cleanup_wandering.CleanupWandering,
-    ) -> WiredUseCase[application.cleanup_wandering.CleanupWandering]:
-        yield use_case
-
     @use_case_wrapper[application.edit_person.EditPerson]()
     async def edit_person(
             self: CoreInteractorFactory, use_case: application.edit_person.EditPerson,
