@@ -4,7 +4,7 @@ from sqlalchemy import select, func, delete
 
 from random_coffee.domain.core.models import NotificationDestination
 from random_coffee.domain.core.models.account import Account
-from random_coffee.domain.core.models.person import Person
+from random_coffee.domain.core.models.example import Person
 from random_coffee.infrastructure.notifier import NotifierBackendEnum
 from random_coffee.infrastructure.notifier.backends.base import NotifierBackend
 from random_coffee.infrastructure.repo import BaseRepo, BaseEntityRepo
