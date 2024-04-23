@@ -6,20 +6,13 @@ from uuid import UUID
 
 from pydantic import BaseModel
 
-from random_coffee.domain.core.models.meeting_circumstances import \
-    MeetingCircumstances
-from random_coffee.domain.core.models.meeting_format import MeetingFormatEnum
-from random_coffee.domain.core.models.meeting_participant import \
-    MeetingParticipant
-from random_coffee.domain.core.models.meeting_state import MeetingStateEnum
-
 from random_coffee.domain.core import models
 from random_coffee.infrastructure.notifier.interface import NotifierBackendEnum
 from random_coffee.domain.core.models import (
     Person,
     Account,
     UTM,
-    NotificationDestination, Role, Employee, Meeting, Organisation,
+    NotificationDestination,
 )
 from random_coffee.domain.telegram.models import (
     TelegramAccount as TelegramAccount,
@@ -50,111 +43,8 @@ class PersonDTO(BaseModel):
             if model.telegram_account_id is None
             else None,
             full_name=model.full_name,
-            age=model.age,
             description=model.description,
-            post=model.post,
             display_text=model.full_name,
-        )
-
-
-class OrganisationDTO(BaseModel):
-    id: int
-    title: str
-    email_domain: str
-    display_text: str
-
-    @classmethod
-    async def from_model(
-            cls, model: Organisation,
-    ):
-        return cls(
-            id=model.id,
-            title=model.title,
-            email_domain=model.email_domain,
-            display_text=model.title,
-        )
-
-
-class MeetingCircumstancesDTO(BaseModel):
-    starts_at: datetime
-    duration_m: int
-    format: MeetingFormatEnum
-    location_latitude: float
-    location_longitude: float
-
-    @classmethod
-    async def from_model(
-            cls,
-            model: MeetingCircumstances,
-    ):
-        return cls(
-            starts_at=model.starts_at,
-            duration_m=model.duration_m,
-            format=model.format,
-            location_latitude=model.location_latitude,
-            location_longutude=model.location_longutude,
-        )
-
-
-class EmployeeDTO(BaseModel):
-    id: int
-    role: Role
-    person: PersonDTO
-
-    @classmethod
-    async def from_model(
-            cls,
-            model: Employee,
-    ):
-        person = await model.awaitable_attrs.person
-        return cls(
-            id=model.id,
-            role=model.role,
-            person=await PersonDTO.from_model(
-                model=person,
-            )
-        )
-
-
-class MeetingParticipantDTO(BaseModel):
-    employee: EmployeeDTO
-
-    @classmethod
-    async def from_model(
-            cls,
-            model: MeetingParticipant,
-    ):
-        return cls(
-            employee=await EmployeeDTO.from_model(
-                model,  # todo: adjust
-            )
-        )
-
-
-class MeetingDTO(BaseModel):
-    id: int
-    state: MeetingStateEnum
-    circumstances: MeetingCircumstancesDTO | None
-    participants: list[MeetingParticipantDTO]
-    created_at: datetime
-
-    @classmethod
-    async def from_model(
-            cls, model: Meeting,
-    ):
-        circumstances = await model.awaitable_attrs.circumstances
-        return cls(
-            id=model.id,
-            state=model.state,
-            circumstances=circumstances and await MeetingCircumstancesDTO.from_model(
-               circumstances,
-            ),
-            participants=[
-                await MeetingParticipantDTO.from_model(
-                    i,
-                ) for i in await model.awaitable_attrs.participants
-            ],
-            created_at=model.created_at,
         )
 
 

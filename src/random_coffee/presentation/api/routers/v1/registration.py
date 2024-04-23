@@ -17,7 +17,6 @@ router = APIRouter(tags=['Auth'])
     responses={
         400: {"model": Union[
             schemas.v1.common.err_responses.Schemas.LoginAlreadyOccupiedError,
-            schemas.v1.common.err_responses.Schemas.UnknownEmailDomainError,
         ]}
     }
 )

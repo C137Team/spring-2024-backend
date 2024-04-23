@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from random_coffee.domain.core.models.example import Person
+from random_coffee.domain.core.models.person import Person
 from random_coffee.infrastructure.repo import BaseRepo, BaseEntityRepo
 
 

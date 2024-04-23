@@ -62,3 +62,9 @@ class CoreInteractorFactory(BaseInteractorFactory):
             self: CoreInteractorFactory, use_case: application.passthrough.Passthrough,
     ) -> WiredUseCase[application.passthrough.Passthrough]:
         yield use_case
+
+    @use_case_wrapper[application.get_my_achievements.GetMyAchievements]()
+    async def get_my_achievements(
+            self: CoreInteractorFactory, use_case: application.get_my_achievements.GetMyAchievements,
+    ) -> WiredUseCase[application.get_my_achievements.GetMyAchievements]:
+        yield use_case

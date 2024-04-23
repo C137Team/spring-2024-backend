@@ -4,6 +4,5 @@ from . import (
     authorization,
     authentication,
     utm,
-    organisation,
     base,
 )

@@ -11,4 +11,5 @@ from . import (
     upsert_telegram_entities,
     edit_person,
     passthrough,
+    get_my_achievements,
 )

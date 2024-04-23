@@ -9,8 +9,7 @@ from random_coffee.domain.core import exceptions
 from random_coffee.application.authorize import (
     AuthorizeDTO, AuthorizeResponseDTO
 )
-from random_coffee.application.common.dto import AccountDTO, PersonDTO, \
-    EmployeeDTO
+from random_coffee.application.common.dto import AccountDTO, PersonDTO
 
 from random_coffee.presentation.api.auth import oauth2_scheme
 
@@ -78,17 +77,3 @@ async def get_current_person(
         )
 
     return account.person
-
-
-async def get_current_employee(
-        ioc: CoreIoCDep,
-        person: Annotated[PersonDTO, Depends(get_current_person)],
-) -> EmployeeDTO:
-    async with ioc.passthrough() as ps:
-        employee = await ps.all_employees.with_person_id(
-            person_id=person.id,
-        )
-        employe_dto = await EmployeeDTO.from_model(
-            employee,
-        )
-    return employe_dto

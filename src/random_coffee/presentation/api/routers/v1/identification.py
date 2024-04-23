@@ -30,7 +30,8 @@ class IdentificationConfirmationSchemeDTO(BaseDTO):
 async def confirm_identification(
         ioc: CoreIoCDep,
         current_account: Annotated[
-            models.Account, Depends(dependencies.get_current.get_current_account)
+            models.Account,
+            Depends(dependencies.get_current.get_current_account),
         ],
         payload: IdentificationConfirmationSchemeDTO,
 ):
