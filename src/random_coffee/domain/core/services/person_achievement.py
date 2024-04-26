@@ -11,7 +11,8 @@ from random_coffee.domain.core.exceptions.notification import (
     NotificationError,
     CantReportInternalError
 )
-from random_coffee.domain.core.models import Achievement, Person
+from random_coffee.domain.core.models.person.achievement import Achievement
+from random_coffee.domain.core.models.person.person import Person
 
 from random_coffee.infrastructure.bases.service import BaseService
 
@@ -40,10 +41,14 @@ class PersonAchievementService(BaseService):
             f"Вы получили ачивку {achievement.title}!"
         )
 
-    async def get_person_achievmenets(
+    async def get_person_achievements(
             self,
             person: Person,
+            page: int = 0,
+            limit: int = 0
     ):
         return await self.all_persons_achievement.with_person_id(
-            person_id=person.id
+            person_id=person.id,
+            limit=limit,
+            offset=limit * page,
         )

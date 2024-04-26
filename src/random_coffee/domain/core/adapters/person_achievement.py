@@ -4,7 +4,7 @@ from typing import Iterable
 
 from sqlalchemy import select
 
-from random_coffee.domain.core.models import PersonAchievement
+from random_coffee.domain.core.models.person.person_achievement import PersonAchievement
 from random_coffee.infrastructure.repo import BaseEntityRepo
 
 
@@ -24,7 +24,11 @@ class AllPersonsAchievements(BaseEntityRepo[PersonAchievement]):
     async def with_person_id(
             self,
             person_id: int,
+            limit: int = 0,
+            offset: int = 0
     ) -> Iterable[PersonAchievement]:
         stmt = (select(PersonAchievement)
-                .where(PersonAchievement.person_id == person_id))
+                .where(PersonAchievement.person_id == person_id)
+                .limit(limit)
+                .offset(offset))
         return await self.session.scalars(stmt)

@@ -6,7 +6,7 @@ from random_coffee.application.login.dto import LoginDTO, LoginResponseDTO
 from random_coffee.infrastructure.bases.use_case import UseCase
 from random_coffee.infrastructure.security.token import create_access_token, CreateTokenData, Sub
 
-from .dto import GetMyAchievementsDTO, GetMyAchievementsResponseDTO
+from .dto import GetMyAchievementsDTO, GetMyAchievementsResponseDTO, achievements_to_dto
 from ...domain.core.services.person_achievement import PersonAchievementService
 
 
@@ -26,9 +26,13 @@ class GetMyAchievements(UseCase[GetMyAchievementsDTO, GetMyAchievementsResponseD
         person = await self.all_persons.with_id(
             payload.person_id,
         )
-        achivements = await self.achievements_service.get_person_achievmenets(
+
+        achievements = await self.achievements_service.get_person_achievements(
             person=person,
+            page=payload.page,
+            limit=payload.limit
         )
+
         return GetMyAchievementsResponseDTO(
-            achievements=[achivements],
+            achievements=achievements_to_dto(achievements),
         )

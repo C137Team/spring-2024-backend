@@ -8,7 +8,7 @@ from sqlalchemy.orm import mapped_column, Mapped, relationship
 from random_coffee.infrastructure.notifier.interface import NotifierBackendEnum
 from random_coffee.infrastructure.relational_entity import BaseRelationalEntity
 
-from .person import Person
+from random_coffee.domain.core.models.person.person import Person
 
 
 class NotificationDestinationRelPerson(BaseRelationalEntity):

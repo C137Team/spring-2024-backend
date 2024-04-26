@@ -6,24 +6,24 @@ from uuid import UUID
 
 from pydantic import BaseModel
 
-from random_coffee.domain.core import models
 from random_coffee.infrastructure.notifier.interface import NotifierBackendEnum
+from random_coffee.domain.core.models.person.person import Person, PersonId
+from random_coffee.domain.core.models.person.account import Account
+
 from random_coffee.domain.core.models import (
-    Person,
-    Account,
     UTM,
     NotificationDestination,
 )
+
 from random_coffee.domain.telegram.models import (
     TelegramAccount as TelegramAccount,
 )
-
 
 BOT_URL = "http://t.me/coffee137_bot"
 
 
 class PersonDTO(BaseModel):
-    id: models.person.PersonId
+    id: PersonId
     full_name: str | None
     age: int | None
     description: str | None

@@ -1,0 +1,3 @@
+[console_scripts]
+random-coffee-api = random_coffee.main.api:main
+random-coffee-telegram = random_coffee.main.telegram:main

@@ -4,7 +4,7 @@ from datetime import datetime
 
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from random_coffee.domain.core.models import Person
+from random_coffee.domain.core.models.person.person import Person
 from random_coffee.infrastructure.database import TelegramIdentifier
 from random_coffee.infrastructure.relational_entity import BaseRelationalEntity
 

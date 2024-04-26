@@ -4,8 +4,8 @@ from random_coffee.infrastructure.security.scopes import AccessScopeEnum
 
 from random_coffee.domain.core.services.access import AccessService
 
-from random_coffee.domain.core.models.account import Account
-from random_coffee.domain.core.models.person import Person
+from random_coffee.domain.core.models.person.account import Account
+from random_coffee.domain.core.models.person.person import Person
 
 from random_coffee.domain.core.exceptions import access as access_exceptions
 from random_coffee.domain.core.exceptions.authorization import (

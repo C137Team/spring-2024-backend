@@ -8,7 +8,8 @@ from random_coffee.infrastructure.security.confirmation_code import \
     generate_confirmation_code
 from random_coffee.infrastructure.security.password import verify_password, get_password_hash
 
-from random_coffee.domain.core.models import Account, Person
+from random_coffee.domain.core.models.person.account import Account
+from random_coffee.domain.core.models.person.person import Person
 from random_coffee.domain.core.exceptions.authentication import (
     AuthenticationError,
     LoginAlreadyOccupiedError,

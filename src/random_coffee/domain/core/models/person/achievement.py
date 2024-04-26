@@ -1,7 +1,7 @@
 from sqlalchemy import VARCHAR, Enum
 from sqlalchemy.orm import Mapped, mapped_column
 
-from random_coffee.domain.core.models.achievement_type import AchievementType
+from random_coffee.domain.core.models.person.achievement_type import AchievementType
 from random_coffee.infrastructure.relational_entity import BaseRelationalEntity
 
 

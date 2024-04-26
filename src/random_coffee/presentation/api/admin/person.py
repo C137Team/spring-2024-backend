@@ -1,6 +1,6 @@
 from sqladmin import ModelView
 
-from random_coffee.domain.core.models import Person
+from random_coffee.domain.core.models.person.person import Person
 
 
 class PersonAdmin(ModelView, model=Person):

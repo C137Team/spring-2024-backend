@@ -24,7 +24,6 @@ class IdentificationSession(BaseRelationalEntity):
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     account_id: Mapped[int] = mapped_column(ForeignKey("account.id"))
     person_id: Mapped[int] = mapped_column(ForeignKey("person.id"))
-    organisation_id: Mapped[int] = mapped_column(ForeignKey("organisation.id"))
     confirmation_code_hash: Mapped[str] = mapped_column()
     status: Mapped[IdentificationSessionStatusEnum] = mapped_column(
         Enum(IdentificationSessionStatusEnum),

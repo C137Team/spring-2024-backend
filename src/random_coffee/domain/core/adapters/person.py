@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-from random_coffee.domain.core.models.person import Person
-from random_coffee.infrastructure.repo import BaseRepo, BaseEntityRepo
+from random_coffee.domain.core.models.person.person import Person
+from random_coffee.infrastructure.repo import BaseEntityRepo
 
 
 class AllPersons(BaseEntityRepo[Person]):

@@ -2,7 +2,8 @@ from random_coffee.domain.core.adapters.identification_session import (
     AllIdentificationSessions,
 )
 from random_coffee.domain.core.adapters.person import AllPersons
-from random_coffee.domain.core.models import Account, Person
+from random_coffee.domain.core.models.person.person import Person
+from random_coffee.domain.core.models.person.account import Account
 from random_coffee.infrastructure.security.confirmation_code import (
     generate_confirmation_code,
     get_confirmation_code_hash,
@@ -36,7 +37,7 @@ class IdentificationService(BaseService):
     async def create_person(
             self,
             full_name: str,
-    ) -> models.Person:
+    ) -> Person:
         person = await self.all_persons.create(
             full_name=full_name,
         )
@@ -49,16 +50,10 @@ class IdentificationService(BaseService):
             confirmation_code: int,
     ) -> IdentificationSession:
         email_domain = account.email.split("@")[1]
-        organisation = await self.all_organisations.get_by_email_domain(
-            email_domain,
-        )
-        if organisation is None:
-            raise UnknownEmailDomainError()
         confirmation_code_hash = get_confirmation_code_hash(confirmation_code)
         identification_session = await self.all_identification_sessions.create(
             account_id=account.id,
             person_id=person.id,
-            organisation_id=organisation.id,
             confirmation_code_hash=confirmation_code_hash,
         )
         return identification_session

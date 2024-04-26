@@ -1,0 +1,33 @@
+Metadata-Version: 2.1
+Name: random_coffee
+Version: 0.0.1
+License-File: LICENSE
+Requires-Dist: fastapi~=0.103.0
+Requires-Dist: python-multipart~=0.0.6
+Requires-Dist: python-jose~=3.3.0
+Requires-Dist: bcrypt==4.0.1
+Requires-Dist: passlib[bcrypt]~=1.7.4
+Requires-Dist: pydantic[email]~=2.0
+Requires-Dist: pydantic-settings~=2.0.3
+Requires-Dist: SQLAlchemy~=2.0.2
+Requires-Dist: uvicorn==0.21.1
+Requires-Dist: dataclass-factory~=2.16
+Requires-Dist: python-dotenv~=1.0.0
+Requires-Dist: asyncpg~=0.27.0
+Requires-Dist: sqladmin~=0.15.0
+Requires-Dist: itsdangerous~=2.1
+Requires-Dist: celery~=5.3.1
+Requires-Dist: redis~=5.0.1
+Requires-Dist: requests~=2.31.0
+Requires-Dist: aiogram>=3
+Requires-Dist: di[anyio]~=0.76.0
+Requires-Dist: transliterate~=1.10.2
+Requires-Dist: psycopg
+Requires-Dist: greenlet
+Requires-Dist: apscheduler
+Provides-Extra: test
+Requires-Dist: pytest~=7.2.2; extra == "test"
+Requires-Dist: pytest-asyncio~=0.20.3; extra == "test"
+Provides-Extra: migrations
+Requires-Dist: alembic; extra == "migrations"
+Requires-Dist: psycopg2~=2.9.6; extra == "migrations"

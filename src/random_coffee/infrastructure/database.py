@@ -14,6 +14,15 @@ def _create_engine(driver: str, is_async: bool):
     else:
         create = create_engine
 
+    print('postgresql+{}://{}:{}@{}:{}/{}'.format(
+            driver,
+            environment.postgres_user,
+            environment.postgres_password,
+            environment.postgres_host,
+            environment.postgres_port,
+            environment.postgres_db
+        ))
+
     engine_ = create(
         'postgresql+{}://{}:{}@{}:{}/{}'.format(
             driver,

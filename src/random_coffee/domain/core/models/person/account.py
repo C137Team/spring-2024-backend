@@ -9,7 +9,7 @@ from random_coffee.infrastructure.models import BuiltinSubtypeMixin
 from random_coffee.infrastructure.relational_entity import BaseRelationalEntity
 
 if TYPE_CHECKING:
-    from random_coffee.domain.core.models import Person
+    from random_coffee.domain.core.models.person.person import Person
 
 
 class AccountId(int, BuiltinSubtypeMixin):
